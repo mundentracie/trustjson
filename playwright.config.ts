@@ -11,7 +11,7 @@ export default defineConfig({
   },
   // serves test/sample.json so the e2e test can open a JSON document
   webServer: {
-    command: 'npx --yes http-server test -p 8080 -s',
+    command: 'node scripts/test-server.mjs',
     port: 8080,
     reuseExistingServer: true,
   },

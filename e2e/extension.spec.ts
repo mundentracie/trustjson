@@ -1,9 +1,10 @@
 import { test, expect, chromium, type BrowserContext, type Page, type Request } from '@playwright/test';
+import { join } from 'path';
 
 // Proof test: launching the packed extension and opening a JSON document must make
 // ZERO external network requests — even while the formatter UI is being used.
 // Adapted from andret2344/free-json-formatter.
-const EXTENSION_DIR = 'dist';
+const EXTENSION_DIR = join(process.cwd(), 'dist');
 const TEST_ORIGIN = 'http://localhost:8080';
 
 test('makes no external requests while formatting', async () => {
