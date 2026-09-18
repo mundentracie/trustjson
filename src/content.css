@@ -1,0 +1,9 @@
+/* TrustJSON styles — MVP skeleton.
+ *
+ * Intent: when the formatter UI mounts, wrap it in `.trustjson-root` so theming
+ * (including dark mode) is SCOPED to the JSON area and NEVER paints the whole
+ * page black. This directly fixes the head product's #1 complaint.
+ */
+.trustjson-root {
+  /* formatter container — added in the MVP build */
+}

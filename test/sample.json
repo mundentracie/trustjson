@@ -1,0 +1,13 @@
+{
+  "name": "TrustJSON",
+  "zeroNetwork": true,
+  "privacy": {
+    "ads": false,
+    "tracking": false,
+    "externalRequests": 0
+  },
+  "nested": {
+    "list": [1, 2, 3],
+    "note": "served by the local playwright webServer for the e2e test"
+  }
+}
