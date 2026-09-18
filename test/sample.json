@@ -1,5 +1,6 @@
 {
   "name": "TrustJSON",
+  "version": "0.2.0",
   "zeroNetwork": true,
   "privacy": {
     "ads": false,
@@ -8,6 +9,11 @@
   },
   "nested": {
     "list": [1, 2, 3],
-    "note": "served by the local playwright webServer for the e2e test"
-  }
+    "mixed": [null, true, 3.14, "unicode ✓ 中文"],
+    "note": "served by the local playwright webServer for the e2e test",
+    "deep": { "a": { "b": { "c": "leaf" } } }
+  },
+  "tags": ["json", "formatter", "privacy"],
+  "emptyObject": {},
+  "emptyArray": []
 }

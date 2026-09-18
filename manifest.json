@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "TrustJSON — Open Source JSON Formatter",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Privacy-first, open-source JSON formatter. No ads, no affiliate code, no tracking, zero network requests. A trustworthy alternative to JSON Formatter.",
   "homepage_url": "https://github.com/mudentracie/trustjson",
   "permissions": [

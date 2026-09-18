@@ -1,9 +1,315 @@
-/* TrustJSON styles — MVP skeleton.
+/* TrustJSON styles (v0.2.0)
  *
- * Intent: when the formatter UI mounts, wrap it in `.trustjson-root` so theming
- * (including dark mode) is SCOPED to the JSON area and NEVER paints the whole
- * page black. This directly fixes the head product's #1 complaint.
+ * Theming is SCOPED to `.trustjson-root` so dark mode NEVER paints the whole
+ * page black — this directly fixes the head product's #1 complaint.
+ *
+ * `all: initial` on the root isolates the UI from site CSS (fonts, colors,
+ * spacing) so a page's stylesheet cannot leak into the formatter.
+ * All values are inserted via textContent in content.js — no innerHTML.
  */
+
 .trustjson-root {
-  /* formatter container — added in the MVP build */
+  /* isolate from site CSS first, then re-declare everything we need */
+  all: initial;
+
+  /* palette (light) */
+  --tj-bg: #ffffff;
+  --tj-fg: #1f2328;
+  --tj-muted: #57606a;
+  --tj-border: #d0d7de;
+  --tj-guide: #d8dee4;
+  --tj-key: #6f42c1;
+  --tj-string: #0a3069;
+  --tj-number: #0550ae;
+  --tj-boolean: #cf222e;
+  --tj-null: #57606a;
+  --tj-btn-bg: #f6f8fa;
+  --tj-btn-border: #d0d7de;
+  --tj-btn-hover: #eaeef2;
+  --tj-accent: #0969da;
+  --tj-row-hover: rgba(9, 105, 218, 0.06);
+  --tj-error-bg: #fff8c5;
+  --tj-error-border: #d4a72c;
+
+  display: block;
+  position: fixed;
+  inset: 0;
+  z-index: 2147483647;
+  overflow: auto;
+  box-sizing: border-box;
+  padding: 0 16px 40px;
+  background: var(--tj-bg);
+  color: var(--tj-fg);
+  font-family: ui-monospace, "SF Mono", "Cascadia Code", Consolas, "Liberation Mono", Menlo, monospace;
+  font-size: 13px;
+  line-height: 1.55;
+  text-align: left;
+}
+
+.trustjson-root[data-theme="dark"] {
+  --tj-bg: #0d1117;
+  --tj-fg: #e6edf3;
+  --tj-muted: #8b949e;
+  --tj-border: #30363d;
+  --tj-guide: #21262d;
+  --tj-key: #d2a8ff;
+  --tj-string: #a5d6ff;
+  --tj-number: #79c0ff;
+  --tj-boolean: #ff7b72;
+  --tj-null: #8b949e;
+  --tj-btn-bg: #21262d;
+  --tj-btn-border: #30363d;
+  --tj-btn-hover: #30363d;
+  --tj-accent: #58a6ff;
+  --tj-row-hover: rgba(177, 186, 196, 0.08);
+  --tj-error-bg: #272115;
+  --tj-error-border: #9e6a03;
+}
+
+/* hidden must always win over component display rules */
+.trustjson-root [hidden] {
+  display: none !important;
+}
+
+/* ---------- toolbar ---------- */
+.trustjson-root .tj-toolbar {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 0;
+  margin: 0 -16px 8px;
+  padding-left: 16px;
+  padding-right: 16px;
+  background: var(--tj-bg);
+  border-bottom: 1px solid var(--tj-border);
+}
+
+.trustjson-root .tj-title {
+  color: var(--tj-accent);
+  font-weight: 700;
+  font-size: 13px;
+}
+
+.trustjson-root .tj-meta {
+  color: var(--tj-muted);
+  font-size: 12px;
+}
+
+.trustjson-root .tj-status {
+  color: var(--tj-accent);
+  font-size: 12px;
+}
+
+.trustjson-root .tj-spacer {
+  flex: 1 1 auto;
+}
+
+.trustjson-root .tj-btn {
+  appearance: none;
+  box-sizing: border-box;
+  display: inline-block;
+  padding: 3px 10px;
+  border: 1px solid var(--tj-btn-border);
+  border-radius: 6px;
+  background: var(--tj-btn-bg);
+  color: var(--tj-fg);
+  font-family: inherit;
+  font-size: 12px;
+  line-height: 1.4;
+  cursor: pointer;
+}
+
+.trustjson-root .tj-btn:hover {
+  background: var(--tj-btn-hover);
+}
+
+.trustjson-root .tj-btn:focus-visible {
+  outline: 2px solid var(--tj-accent);
+  outline-offset: 1px;
+}
+
+/* ---------- tree ---------- */
+.trustjson-root .tj-tree {
+  padding-top: 4px;
+}
+
+.trustjson-root .tj-node {
+  display: block;
+}
+
+.trustjson-root .tj-row {
+  display: block;
+  padding: 0 6px;
+  border-radius: 4px;
+  word-break: break-word;
+}
+
+.trustjson-root .tj-row:hover {
+  background: var(--tj-row-hover);
+}
+
+.trustjson-root .tj-toggle {
+  appearance: none;
+  display: inline-block;
+  width: 18px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--tj-muted);
+  font-family: inherit;
+  font-size: 11px;
+  line-height: 1.4;
+  cursor: pointer;
+  text-align: center;
+}
+
+.trustjson-root .tj-toggle:hover {
+  color: var(--tj-fg);
+}
+
+.trustjson-root .tj-toggle:focus-visible {
+  outline: 2px solid var(--tj-accent);
+  outline-offset: 0;
+}
+
+.trustjson-root .tj-toggle-spacer {
+  display: inline-block;
+  width: 18px;
+}
+
+.trustjson-root .tj-key {
+  color: var(--tj-key);
+}
+
+.trustjson-root .tj-punct {
+  color: var(--tj-muted);
+}
+
+.trustjson-root .tj-val-string {
+  color: var(--tj-string);
+  word-break: break-all;
+}
+
+.trustjson-root .tj-val-number {
+  color: var(--tj-number);
+}
+
+.trustjson-root .tj-val-boolean {
+  color: var(--tj-boolean);
+}
+
+.trustjson-root .tj-val-null {
+  color: var(--tj-null);
+  font-style: italic;
+}
+
+.trustjson-root .tj-preview .tj-count {
+  color: var(--tj-muted);
+  font-size: 12px;
+}
+
+.trustjson-root .tj-children {
+  display: block;
+  margin-left: 8px;
+  padding-left: 12px;
+  border-left: 1px solid var(--tj-guide);
+}
+
+.trustjson-root .tj-more {
+  appearance: none;
+  display: inline-block;
+  margin: 2px 0 2px 18px;
+  padding: 2px 8px;
+  border: 1px dashed var(--tj-btn-border);
+  border-radius: 6px;
+  background: transparent;
+  color: var(--tj-muted);
+  font-family: inherit;
+  font-size: 11px;
+  cursor: pointer;
+}
+
+.trustjson-root .tj-more:hover {
+  color: var(--tj-fg);
+  background: var(--tj-btn-hover);
+}
+
+/* ---------- raw view ---------- */
+.trustjson-root .tj-raw {
+  margin: 8px 0 0;
+  padding: 8px;
+  border: 1px solid var(--tj-border);
+  border-radius: 6px;
+  white-space: pre-wrap;
+  word-break: break-all;
+  font-family: inherit;
+  font-size: 13px;
+  color: var(--tj-fg);
+}
+
+/* ---------- error banner ---------- */
+.trustjson-root .tj-error-banner {
+  margin: 24px auto;
+  max-width: 860px;
+  padding: 16px;
+  border: 1px solid var(--tj-error-border);
+  border-radius: 8px;
+  background: var(--tj-error-bg);
+  color: var(--tj-fg);
+}
+
+.trustjson-root .tj-error-title {
+  display: block;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.trustjson-root .tj-error-msg {
+  color: var(--tj-muted);
+  word-break: break-all;
+}
+
+.trustjson-root .tj-error-pos {
+  margin-top: 4px;
+  color: var(--tj-accent);
+}
+
+.trustjson-root .tj-error-snippet {
+  margin: 8px 0 0;
+  padding: 8px;
+  border-radius: 6px;
+  background: var(--tj-btn-bg);
+  white-space: pre-wrap;
+  word-break: break-all;
+  font-family: inherit;
+}
+
+.trustjson-root .tj-error-raw {
+  margin-top: 10px;
+}
+
+.trustjson-root .tj-error-raw summary {
+  cursor: pointer;
+  color: var(--tj-accent);
+}
+
+/* ---------- small screens ---------- */
+@media (max-width: 600px) {
+  .trustjson-root .tj-meta {
+    display: none;
+  }
+
+  .trustjson-root {
+    padding: 0 8px 32px;
+  }
+
+  .trustjson-root .tj-toolbar {
+    margin: 0 -8px 8px;
+    padding-left: 8px;
+    padding-right: 8px;
+  }
 }

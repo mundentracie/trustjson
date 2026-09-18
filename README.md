@@ -47,7 +47,8 @@ Run it yourself:
 ```bash
 npm install
 npm run build
-npm run test:e2e
+npm run verify     # no-browser checks: manifest privacy posture, zero-network audit, formatter logic (DOM mock)
+npm run test:e2e   # real-browser proof test (Playwright)
 ```
 
 ## Install
@@ -64,9 +65,20 @@ of keys it writes to `chrome.storage.local`. Spoiler: only your display preferen
 
 ## Status
 
-MVP in progress. The current skeleton detects JSON pages and parses them locally with **zero network
-calls** — verified by the e2e test above. The formatter UI (collapsible tree, scoped dark mode,
-themes, search) is the next build step.
+**v0.2.0 — the formatter works.** Open any JSON page and TrustJSON replaces it with a collapsible
+tree, entirely on your device:
+
+- **Expand / Collapse all**, per-node toggling, lazy rendering with batched children so large
+  documents stay responsive
+- **Scoped dark mode** — only the JSON area is themed. Your page is never painted black
+  (the head product's #1 complaint, fixed by construction)
+- **Auto / Light / Dark** themes, remembered on your device (`chrome.storage.local`, nothing else)
+- **Raw view + one-click Copy** of the original document
+- **Parse errors** shown with line/column position and a snippet — invalid JSON never breaks the page
+- Zero network requests while doing all of the above — proven by the e2e test, which now also
+  clicks through Expand all / Collapse all / Raw before asserting `expect(external).toEqual([])`
+
+Roadmap: key sorting, custom fonts, in-tree search, worker-based parsing for 10 MB+ documents.
 
 ## License
 

@@ -10,7 +10,7 @@ device via `chrome.storage.local`. As features land, every key is listed here:
 
 | Key            | Purpose                  | Shared with anyone? |
 |----------------|--------------------------|----------------------|
-| _(none yet)_   | —                        | —                    |
+| `theme`        | Remembers your toolbar theme choice (`auto` / `light` / `dark`) | No — never leaves your device |
 
 No JSON content you view is ever read by us, stored remotely, or transmitted.
 
