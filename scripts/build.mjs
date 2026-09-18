@@ -2,7 +2,7 @@
 // Keeps the content script as a single IIFE with NO external imports,
 // so the "zero network requests" guarantee holds by construction.
 import { build } from 'esbuild';
-import { copyFileSync, mkdirSync } from 'fs';
+import { copyFileSync, mkdirSync, cpSync } from 'fs';
 
 mkdirSync('dist', { recursive: true });
 
@@ -16,5 +16,7 @@ await build({
 
 copyFileSync('src/content.css', 'dist/src/content.css');
 copyFileSync('manifest.json', 'dist/manifest.json');
+mkdirSync('dist/icons', { recursive: true });
+copyFileSync('src/icons/icon128.png', 'dist/icons/icon128.png');
 
 console.log('built -> dist/ (load-unpacked ready)');
