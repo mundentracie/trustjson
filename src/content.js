@@ -1,4 +1,4 @@
-// TrustJSON content script — MVP formatter (v0.2.0)
+// TrustJSON content script — MVP formatter (v0.2.1)
 //
 // ZERO-NETWORK RULE (enforced by e2e/extension.spec.ts):
 //   no fetch / XMLHttpRequest / WebSocket / navigator.sendBeacon / importScripts /
