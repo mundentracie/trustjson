@@ -53,10 +53,10 @@ npm run test:e2e   # real-browser proof test (Playwright)
 
 ## Install
 
-- **Now (free, instant):** clone the repo, run `npm run build`, and *Load unpacked* the `dist/`
-  folder at `chrome://extensions` (enable Developer mode).
-- **Soon:** Chrome Web Store listing (one-time $5 fee). Search "TrustJSON" or
-  *"JSON Formatter alternative — no ads, no tracking"*.
+- **Microsoft Edge:** [install from Edge Add-ons](https://microsoftedge.microsoft.com/addons/detail/fiophogpceceglngoidlplgeiehmgefb) ✅ live
+- **Chrome:** Chrome Web Store listing is under review — search "TrustJSON" there soon.
+- **Any Chromium browser (free, instant):** clone the repo, run `npm run build`, and *Load unpacked*
+  the `dist/` folder at `chrome://extensions` (enable Developer mode).
 
 ## Privacy
 
